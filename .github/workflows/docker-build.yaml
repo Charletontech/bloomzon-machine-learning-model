@@ -19,9 +19,7 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
     - name: Build and Push
-      uses: docker/build-push-action@v3
-      with:
-        push: true # Push to Docker Hub
-        context: .  # Build context
-        file: ./Dockerfile # Path to Dockerfile
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/bloomzon:latest  # Replace with your Docker Hub username and image name
+      run: |
+        docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/bloomzon:latest 
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/bloomzon:latest 
+     
