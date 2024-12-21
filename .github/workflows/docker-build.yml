@@ -1,0 +1,23 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [ "main" ] # Trigger on pushes to the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build and Push
+      uses: docker/build-push-action@v3
+      with:
+        push: true # Push to Docker Hub
+        context: .  # Build context
+        file: ./Dockerfile # Path to Dockerfile
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/your-image-name:latest
+        secrets: |
+          ${{ secrets.DOCKER_HUB_USERNAME }}:${{ secrets.DOCKER_HUB_PASSWORD }}
